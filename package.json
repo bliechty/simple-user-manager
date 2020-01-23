@@ -1,6 +1,9 @@
 {
   "name": "users-express",
   "version": "1.0.0",
+  "scripts": {
+    "start": "node users.js"
+  },
   "dependencies": {
     "csv-parser": "^2.3.2",
     "csv-writer": "^1.6.0",

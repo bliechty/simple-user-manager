@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const fs = require("fs");
 const app = express();
 const users = [];
+let port = process.env.PORT || 8080;
 
 fs.createReadStream("./users.csv")
     .pipe(csv())
@@ -93,6 +94,6 @@ app.use((err, req, res) => {
     res.status(500).send("Something broke");
 });
 
-app.listen(8080, () => {
+app.listen(port, () => {
     console.log("listening on port 8080");
 });
