@@ -49,10 +49,6 @@ app.use("/sessionUsers", (req, res, next) => {
     }
 });
 
-app.get("/", (req, res) => {
-    res.send("test");
-});
-
 app.post("/createUser", (req, res, next) => {
     const d = new Date();
     const firstName = req.body["first-name"];
@@ -72,6 +68,10 @@ app.post("/createUser", (req, res, next) => {
         req.session.numSessionUsers++;
     }
     res.send(`<div>Thank you for making an account ${firstName}</div>`);
+});
+
+app.get("/", (req, res) => {
+    res.send("test");
 });
 
 app.post("/searchUsers", (req, res) => {
