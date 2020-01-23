@@ -49,6 +49,10 @@ app.use("/sessionUsers", (req, res, next) => {
     }
 });
 
+app.get("/", (req, res) => {
+    res.send("test");
+});
+
 app.post("/createUser", (req, res, next) => {
     const d = new Date();
     const firstName = req.body["first-name"];
