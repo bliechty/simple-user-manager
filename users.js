@@ -83,7 +83,7 @@ app.get("/allUsers", (req, res) => {
         res.write(`First Name: ${user.firstName}\n`);
         res.write(`Last Name: ${user.lastName}\n`);
         res.write(`Email: ${user.email}\n`);
-        res.write(`Account created ${user.timeStamp}\n\n\n`);
+        res.write(`Account created: ${user.timeStamp}\n\n\n`);
     }
     res.end("End of user list");
 });
