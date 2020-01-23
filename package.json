@@ -1,0 +1,13 @@
+{
+  "name": "users-express",
+  "version": "1.0.0",
+  "dependencies": {
+    "csv-parser": "^2.3.2",
+    "csv-writer": "^1.6.0",
+    "express": "^4.17.1",
+    "body-parser": "latest"
+  },
+  "devDependencies": {
+    "express-session": "^1.17.0"
+  }
+}
