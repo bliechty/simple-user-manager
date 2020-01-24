@@ -46,7 +46,7 @@ app.use(session({
 }));
 
 app.get("/createUser", (req, res) => {
-    res.render("index");
+    res.render("createUser");
 });
 
 app.post("/createUser", (req, res) => {
@@ -64,24 +64,15 @@ app.post("/createUser", (req, res) => {
     csvWriter.writeRecords([user]).then(() => {
         console.log("User written to csv file");
     });
-    res.send(`<div>Thank you for making an account ${firstName}</div>
-              <a href="/createUser">Create User</a>`);
+    res.redirect("../allUsers");
 });
 
 app.get("/", (req, res) => {
-    res.send("Home Page");
+    res.render("index");
 });
 
 app.get("/allUsers", (req, res) => {
-    for (let user of users) {
-        res.write(`Username: ${user.username}\n`);
-        res.write(`First Name: ${user.firstName}\n`);
-        res.write(`Last Name: ${user.lastName}\n`);
-        res.write(`Email: ${user.email}\n`);
-        res.write(`Age: ${user.age}\n`);
-        res.write(`Account created: ${user.timeCreated}\n\n\n`);
-    }
-    res.end("End of user list");
+    res.render("usersList", {users});
 });
 
 app.listen(port, () => {
