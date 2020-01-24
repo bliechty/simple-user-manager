@@ -6,7 +6,10 @@ html
             div Last Name: #{obj.lastName}
             div Email: #{obj.email}
             div Age: #{obj.age}
+            div User Id: #{obj.userId}
             div Account created: #{obj.timeCreated}
+            a(href="/allUsers/"+obj.userId) Edit User
+            br
             br
             br
         div End of user list

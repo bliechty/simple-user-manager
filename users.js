@@ -1,11 +1,11 @@
 const express = require("express");
 const csv = require("csv-parser");
 const createObjectCsvWriter = require("csv-writer").createObjectCsvWriter;
-const session = require("express-session");
 const bodyParser = require('body-parser');
 const fs = require("fs");
 const app = express();
 const path = require("path");
+const uuid = require("uuid");
 const users = [];
 let port = process.env.PORT || 8080;
 
@@ -23,6 +23,7 @@ const csvWriter = new createObjectCsvWriter({
         "lastName",
         "email",
         "age",
+        "userId",
         "timeCreated"
     ],
     append: true
@@ -51,6 +52,7 @@ app.post("/createUser", (req, res) => {
         lastName: req.body["last-name"],
         email: req.body["email-address"],
         age: req.body["age"],
+        userId: uuid.v4(),
         timeCreated: d.toLocaleString()
     };
     users.push(user);
@@ -66,6 +68,15 @@ app.get("/", (req, res) => {
 
 app.get("/allUsers", (req, res) => {
     res.render("usersList", {users});
+});
+
+app.get("/allUsers/:userId", (req, res) => {
+    const user = users.filter(user => user.userId === req.params.userId)[0];
+    if (user) {
+        res.render("editUser", {user});
+    } else {
+        res.send("That user does not exist");
+    }
 });
 
 app.listen(port, () => {
