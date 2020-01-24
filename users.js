@@ -38,13 +38,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge: 100000 }
-}));
-
 app.get("/createUser", (req, res) => {
     res.render("createUser");
 });
