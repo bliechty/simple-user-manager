@@ -1,0 +1,22 @@
+html
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    body
+        form#create-user-form(method="post")
+            div
+                label#user-name Username
+                input(type="text" name="user-name" placeholder="Username")
+            div
+                label#first-name First Name
+                input(type="text" name="first-name" placeholder="First Name")
+            div
+                label#last-name Last Name
+                input(type="text" name="last-name" placeholder="Last Name")
+            div
+                label#email-address Email Address
+                input(type="email" name="email-address" placeholder="Email Address")
+            div
+                label#age Age
+                input(type="number" name="age" placeholder="Age")
+            input(type="submit")
