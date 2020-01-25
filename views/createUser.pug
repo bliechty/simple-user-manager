@@ -1,13 +1,16 @@
 html
     head
         include pure.pug
+        include fonts.pug
         style
-            include navBar.css
+            include css/navBar.css
+            include css/headers.css
+            include css/createUser.css
     body
         include navBar.pug
-        h1 Create User
-        form(method="post" class="pure-form pure-form-aligned")
-            fieldset
+        h2 Create User
+        div(id="create-user")
+            form(method="post" class="pure-form pure-form-aligned")
                 div(class="pure-control-group")
                     label#user-name Username
                     input(type="text" name="user-name" placeholder="Username")

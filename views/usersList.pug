@@ -1,24 +1,39 @@
 html
     head
         include pure.pug
+        include fonts.pug
         style
-            include navBar.css
+            include css/navBar.css
+            include css/usersList.css
+            include css/text.css
+            include css/headers.css
     body
         include navBar.pug
-        h1 User List
-        each obj in users
-            div Username: #{obj.username}
-            div First Name: #{obj.firstName}
-            div Last Name: #{obj.lastName}
-            div Email: #{obj.email}
-            div Age: #{obj.age}
-            div User Id: #{obj.userId}
-            div Account created: #{obj.timeCreated}
-            div
-                a(href="/userList/"+obj.userId) Edit User
-            div
-                a(href="/deleteUser/"+obj.username+"/"+obj.userId) Delete User
-            br
-            br
-            br
-        div End of user list
+        h2 User List
+        if users.length !== 0
+            table(class="pure-table pure-table-bordered" id="user-list-table")
+                thead
+                    tr
+                        th Username
+                        th First Name
+                        th Last Name
+                        th Email
+                        th Age
+                        th Account Created
+                        th Edit User
+                        th Delete User
+                tbody
+                    each obj in users
+                        tr
+                            td= obj.username
+                            td= obj.firstName
+                            td= obj.lastName
+                            td= obj.email
+                            td= obj.age
+                            td= obj.timeCreated
+                            td
+                                a(href="/userList/"+obj.userId) Edit User
+                            td
+                                a(href="/deleteUser/"+obj.username+"/"+obj.userId) Delete User
+        else
+            div.message There are no users saved

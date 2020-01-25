@@ -1,11 +1,13 @@
 html
     head
         include pure.pug
+        include fonts.pug
         style
-            include navBar.css
+            include css/navBar.css
+            include css/headers.css
     body
         include navBar.pug
-        h1 Edit User
+        h2 Edit User
         form(method="post" class="pure-form pure-form-aligned")
             div(class="pure-control-group")
                 label#user-name Username
