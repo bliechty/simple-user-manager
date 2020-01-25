@@ -27,25 +27,33 @@ app.get("/createUser", (req, res) => {
 });
 
 app.post("/createUser", (req, res) => {
-    const d = new Date();
-    const user = {
-        username: req.body["user-name"],
-        firstName: req.body["first-name"],
-        lastName: req.body["last-name"],
-        email: req.body["email-address"],
-        age: req.body["age"],
-        userId: uuid.v4(),
-        timeCreated: d.toLocaleString()
-    };
-    users.push(user);
-    fs.appendFile("./users.txt", `${JSON.stringify(user)}\n`, err => {
-        if (err) {
-            console.log(`Error: ${err}`);
-        } else {
-            console.log("User was appended to file");
-        }
-    });
-    res.redirect("/userList");
+    if (
+        req.body["user-name"] !== "" && req.body["first-name"] !== "" &&
+        req.body["last-name"] !== "" && req.body["email-address"] !== "" &&
+        req.body["age"] !== ""
+    ) {
+        const d = new Date();
+        const user = {
+            username: req.body["user-name"],
+            firstName: req.body["first-name"],
+            lastName: req.body["last-name"],
+            email: req.body["email-address"],
+            age: req.body["age"],
+            userId: uuid.v4(),
+            timeCreated: d.toLocaleString()
+        };
+        users.push(user);
+        fs.appendFile("./users.txt", `${JSON.stringify(user)}\n`, err => {
+            if (err) {
+                console.log(`Error: ${err}`);
+            } else {
+                console.log("User was appended to file");
+            }
+        });
+        res.redirect("/userList");
+    } else {
+        res.send("Inputs cannot be empty");
+    }
 });
 
 app.get("/", (req, res) => {
@@ -84,32 +92,40 @@ app.get("/userList/:userId", (req, res) => {
 });
 
 app.post("/userList/:userId", (req, res) => {
-    let refactoredUsers = "";
-    users = users.map(user => {
-        if (user.userId === req.params.userId) {
-            const refactoredUser = {
-                ...user,
-                username: req.body["user-name"],
-                firstName: req.body["first-name"],
-                lastName: req.body["last-name"],
-                email: req.body["email-address"],
-                age: req.body["age"]
-            };
-            refactoredUsers += `${JSON.stringify(refactoredUser)}\n`;
-            return refactoredUser;
-        } else {
-            refactoredUsers += `${JSON.stringify(user)}\n`;
-            return user;
-        }
-    });
-    fs.writeFile("users.txt", refactoredUsers, err => {
-        if (err) {
-            console.log(`Error: ${err}`);
-        } else {
-            console.log("Users written to file");
-        }
-    });
-    res.redirect("/userList");
+    if (
+        req.body["user-name"] !== "" && req.body["first-name"] !== "" &&
+        req.body["last-name"] !== "" && req.body["email-address"] !== "" &&
+        req.body["age"] !== ""
+    ) {
+        let refactoredUsers = "";
+        users = users.map(user => {
+            if (user.userId === req.params.userId) {
+                const refactoredUser = {
+                    ...user,
+                    username: req.body["user-name"],
+                    firstName: req.body["first-name"],
+                    lastName: req.body["last-name"],
+                    email: req.body["email-address"],
+                    age: req.body["age"]
+                };
+                refactoredUsers += `${JSON.stringify(refactoredUser)}\n`;
+                return refactoredUser;
+            } else {
+                refactoredUsers += `${JSON.stringify(user)}\n`;
+                return user;
+            }
+        });
+        fs.writeFile("users.txt", refactoredUsers, err => {
+            if (err) {
+                console.log(`Error: ${err}`);
+            } else {
+                console.log("Users written to file");
+            }
+        });
+        res.redirect("/userList");
+    } else {
+        res.send("Inputs cannot be empty");
+    }
 });
 
 app.listen(port, () => {
