@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const lineReader = require("line-reader");
 const fs = require("fs");
 const app = express();
 const path = require("path");
@@ -8,8 +7,17 @@ const uuid = require("uuid");
 let users = [];
 let port = process.env.PORT || 8080;
 
-lineReader.eachLine("./users.txt", line => {
-    users.push(JSON.parse(line));
+fs.readFile("./users.txt", "utf-8", (err, content) => {
+    if (err) {
+        console.log(`Error: ${err}`);
+    } else {
+        let tempUsers = content.split("\n");
+        tempUsers = tempUsers.slice(0, tempUsers.length - 1);
+        console.log(tempUsers);
+        for (let user of tempUsers) {
+            users.push(JSON.parse(user));
+        }
+    }
 });
 
 app.set("views", path.join(__dirname, "views"));
@@ -129,5 +137,5 @@ app.post("/userList/:userId", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log("listening on port " + port);
+    console.log(`Listening on port ${port}`);
 });
