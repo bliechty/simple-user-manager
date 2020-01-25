@@ -1,5 +1,6 @@
 html
     body
+        h1 User List
         each obj in users
             div Username: #{obj.username}
             div First Name: #{obj.firstName}
@@ -8,7 +9,7 @@ html
             div Age: #{obj.age}
             div User Id: #{obj.userId}
             div Account created: #{obj.timeCreated}
-            a(href="/allUsers/"+obj.userId) Edit User
+            a(href="/userList/"+obj.userId) Edit User
             br
             br
             br

@@ -1,0 +1,4 @@
+{"username":"fje","firstName":"mtech lol xd","lastName":"","email":"","age":"","userId":"41ca89e1-a403-4bfa-ab8f-58ce4250baab","timeCreated":"1/24/2020, 6:46:56 PM"}
+{"username":"ajsegjjsaehse","firstName":"xd","lastName":"","email":"","age":"","userId":"eb25f53d-8483-4252-b057-8f8f475edfbc","timeCreated":"1/24/2020, 6:47:37 PM"}
+{"username":"wwwpol","firstName":"Patrick","lastName":"Liechty","email":"wwwpol@gmail.com","age":"20","userId":"8d061e7c-90b4-4b7e-8d48-78d8ec995e72","timeCreated":"1/24/2020, 6:55:52 PM"}
+{"username":"berryboy","firstName":"Brady","lastName":"Liechty","email":"berryboy@gmail.com","age":"25","userId":"4ace0fef-612a-4131-b2a2-6ed9d0f6caf4","timeCreated":"1/24/2020, 7:57:07 PM"}

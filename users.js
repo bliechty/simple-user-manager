@@ -1,32 +1,15 @@
 const express = require("express");
-const csv = require("csv-parser");
-const createObjectCsvWriter = require("csv-writer").createObjectCsvWriter;
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
+const lineReader = require("line-reader");
 const fs = require("fs");
 const app = express();
 const path = require("path");
 const uuid = require("uuid");
-const users = [];
+let users = [];
 let port = process.env.PORT || 8080;
 
-fs.createReadStream("./users.csv")
-    .pipe(csv())
-    .on("data", user => {
-        users.push(user);
-    });
-
-const csvWriter = new createObjectCsvWriter({
-    path: "users.csv",
-    header: [
-        "username",
-        "firstName",
-        "lastName",
-        "email",
-        "age",
-        "userId",
-        "timeCreated"
-    ],
-    append: true
+lineReader.eachLine("./users.txt", line => {
+    users.push(JSON.parse(line));
 });
 
 app.set("views", path.join(__dirname, "views"));
@@ -45,10 +28,9 @@ app.get("/createUser", (req, res) => {
 
 app.post("/createUser", (req, res) => {
     const d = new Date();
-    const firstName = req.body["first-name"];
     const user = {
         username: req.body["user-name"],
-        firstName,
+        firstName: req.body["first-name"],
         lastName: req.body["last-name"],
         email: req.body["email-address"],
         age: req.body["age"],
@@ -56,27 +38,58 @@ app.post("/createUser", (req, res) => {
         timeCreated: d.toLocaleString()
     };
     users.push(user);
-    csvWriter.writeRecords([user]).then(() => {
-        console.log("User written to csv file");
+    fs.appendFile("./users.txt", `${JSON.stringify(user)}\n`, err => {
+        if (err) {
+            console.log(`Error: ${err}`);
+        } else {
+            console.log("User was appended to file");
+        }
     });
-    res.redirect("../allUsers");
+    res.redirect("../userList");
 });
 
 app.get("/", (req, res) => {
     res.render("index");
 });
 
-app.get("/allUsers", (req, res) => {
+app.get("/userList", (req, res) => {
     res.render("usersList", {users});
 });
 
-app.get("/allUsers/:userId", (req, res) => {
+app.get("/userList/:userId", (req, res) => {
     const user = users.filter(user => user.userId === req.params.userId)[0];
     if (user) {
         res.render("editUser", {user});
     } else {
         res.send("That user does not exist");
     }
+});
+
+app.post("/userList/:userId", (req, res) => {
+    let refactoredUsers = "";
+    users = users.map(user => {
+        if (user.userId === req.params.userId) {
+            const refactoredUser = {
+                ...user,
+                username: req.body["user-name"],
+                firstName: req.body["first-name"],
+                lastName: req.body["last-name"],
+                email: req.body["email-address"],
+                age: req.body["age"]
+            };
+            refactoredUsers += `${JSON.stringify(refactoredUser)}\n`;
+            return refactoredUser;
+        } else {
+            refactoredUsers += `${JSON.stringify(user)}\n`;
+            return user;
+        }
+    });
+    fs.writeFile("users.txt", refactoredUsers, err => {
+        if (err) {
+            console.log(`Error: ${err}`);
+        }
+    });
+    res.redirect("../userList");
 });
 
 app.listen(port, () => {
