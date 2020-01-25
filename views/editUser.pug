@@ -1,23 +1,26 @@
 html
     head
         include pure.pug
+        style
+            include navBar.css
     body
         include navBar.pug
         h1 Edit User
-        form(method="post")
-            div
+        form(method="post" class="pure-form pure-form-aligned")
+            div(class="pure-control-group")
                 label#user-name Username
                 input(type="text" name="user-name" value=user.username)
-            div
+            div(class="pure-control-group")
                 label#first-name First Name
                 input(type="text" name="first-name" value=user.firstName)
-            div
+            div(class="pure-control-group")
                 label#last-name Last Name
                 input(type="text" name="last-name" value=user.lastName)
-            div
+            div(class="pure-control-group")
                 label#email-address Email Address
                 input(type="email" name="email-address" value=user.email)
-            div
+            div(class="pure-control-group")
                 label#age Age
                 input(type="number" name="age" value=user.age)
-            input(type="submit")
+            div(class="pure-controls")
+                input(type="submit" class="pure-button pure-button-primary")
