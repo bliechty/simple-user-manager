@@ -45,7 +45,7 @@ app.post("/createUser", (req, res) => {
             console.log("User was appended to file");
         }
     });
-    res.redirect("../userList");
+    res.redirect("/userList");
 });
 
 app.get("/", (req, res) => {
@@ -54,6 +54,24 @@ app.get("/", (req, res) => {
 
 app.get("/userList", (req, res) => {
     res.render("usersList", {users});
+});
+
+app.get("/deleteUser/:username/:userId", (req, res) => {
+    let refactoredUsers = "";
+    users = users.filter(user => {
+        if (user.userId !== req.params.userId) {
+            refactoredUsers += `${JSON.stringify(user)}\n`;
+        }
+        return user.userId !== req.params.userId
+    });
+    fs.writeFile("users.txt", refactoredUsers, err => {
+        if (err) {
+            console.log(`Error: ${err}`);
+        } else {
+            console.log("Users written to file");
+        }
+    });
+    res.redirect("/userList");
 });
 
 app.get("/userList/:userId", (req, res) => {
@@ -87,9 +105,11 @@ app.post("/userList/:userId", (req, res) => {
     fs.writeFile("users.txt", refactoredUsers, err => {
         if (err) {
             console.log(`Error: ${err}`);
+        } else {
+            console.log("Users written to file");
         }
     });
-    res.redirect("../userList");
+    res.redirect("/userList");
 });
 
 app.listen(port, () => {

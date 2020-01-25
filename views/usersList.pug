@@ -9,7 +9,10 @@ html
             div Age: #{obj.age}
             div User Id: #{obj.userId}
             div Account created: #{obj.timeCreated}
-            a(href="/userList/"+obj.userId) Edit User
+            div
+                a(href="/userList/"+obj.userId) Edit User
+            div
+                a(href="/deleteUser/"+obj.username+"/"+obj.userId) Delete User
             br
             br
             br
