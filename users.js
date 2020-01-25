@@ -37,7 +37,7 @@ app.post("/createUser", (req, res) => {
     if (
         req.body["user-name"] !== "" && req.body["first-name"] !== "" &&
         req.body["last-name"] !== "" && req.body["email-address"] !== "" &&
-        req.body["age"] !== ""
+        req.body["age"] !== "" && req.body["age"] > 0
     ) {
         const d = new Date();
         const user = {
@@ -58,6 +58,8 @@ app.post("/createUser", (req, res) => {
             }
         });
         res.redirect("/userList");
+    } else if (req.body["age"] <= 0) {
+        res.send("Age has to be greater than 0");
     } else {
         res.send("Inputs cannot be empty");
     }
@@ -102,7 +104,7 @@ app.post("/userList/:userId", (req, res) => {
     if (
         req.body["user-name"] !== "" && req.body["first-name"] !== "" &&
         req.body["last-name"] !== "" && req.body["email-address"] !== "" &&
-        req.body["age"] !== ""
+        req.body["age"] !== "" && req.body["age"] > 0
     ) {
         let refactoredUsers = "";
         users = users.map(user => {
@@ -130,6 +132,8 @@ app.post("/userList/:userId", (req, res) => {
             }
         });
         res.redirect("/userList");
+    } else if (req.body["age"] <= 0) {
+        res.send("Age has to be greater than 0");
     } else {
         res.send("Inputs cannot be empty");
     }
