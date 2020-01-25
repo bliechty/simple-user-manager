@@ -13,7 +13,6 @@ fs.readFile("./users.txt", "utf-8", (err, content) => {
     } else {
         let tempUsers = content.split("\n");
         tempUsers = tempUsers.slice(0, tempUsers.length - 1);
-        console.log(tempUsers);
         for (let user of tempUsers) {
             users.push(JSON.parse(user));
         }
