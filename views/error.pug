@@ -8,6 +8,7 @@ html
             include css/error.css
     body
         include navBar.pug
-        div#error-message
-            div= message
-            a(href="javascript:history.back()") Try Again
+        div#error-container
+            div#error
+                div#error-message= message
+                a(href="javascript:history.back()", id="try-again") Try Again
