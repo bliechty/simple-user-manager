@@ -35,10 +35,14 @@ app.get("/createUser", (req, res) => {
 
 app.post("/createUser", (req, res) => {
     if (
-        req.body["user-name"] !== "" && req.body["first-name"] !== "" &&
-        req.body["last-name"] !== "" && req.body["email-address"] !== "" &&
-        req.body["age"] !== "" && req.body["age"] > 0
+        req.body["user-name"] === "" || req.body["first-name"] === "" ||
+        req.body["last-name"] === "" || req.body["email-address"] === "" ||
+        req.body["age"] === ""
     ) {
+        res.send("Inputs cannot be blank");
+    } else if (req.body["age"] <= 0) {
+        res.send("Age has to be greater than 0");
+    } else {
         const d = new Date();
         const user = {
             username: req.body["user-name"],
@@ -58,10 +62,6 @@ app.post("/createUser", (req, res) => {
             }
         });
         res.redirect("/userList");
-    } else if (req.body["age"] <= 0) {
-        res.send("Age has to be greater than 0");
-    } else {
-        res.send("Inputs cannot be empty");
     }
 });
 
@@ -102,10 +102,14 @@ app.get("/userList/:userId", (req, res) => {
 
 app.post("/userList/:userId", (req, res) => {
     if (
-        req.body["user-name"] !== "" && req.body["first-name"] !== "" &&
-        req.body["last-name"] !== "" && req.body["email-address"] !== "" &&
-        req.body["age"] !== "" && req.body["age"] > 0
+        req.body["user-name"] === "" || req.body["first-name"] === "" ||
+        req.body["last-name"] === "" || req.body["email-address"] === "" ||
+        req.body["age"] === ""
     ) {
+        res.send("Inputs cannot be blank");
+    } else if (req.body["age"] <= 0) {
+        res.send("Age has to be greater than 0");
+    } else {
         let refactoredUsers = "";
         users = users.map(user => {
             if (user.userId === req.params.userId) {
@@ -132,10 +136,6 @@ app.post("/userList/:userId", (req, res) => {
             }
         });
         res.redirect("/userList");
-    } else if (req.body["age"] <= 0) {
-        res.send("Age has to be greater than 0");
-    } else {
-        res.send("Inputs cannot be empty");
     }
 });
 

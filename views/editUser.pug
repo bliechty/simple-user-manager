@@ -5,24 +5,27 @@ html
         style
             include css/navBar.css
             include css/headers.css
+            include css/editUser.css
+            include css/text.css
     body
         include navBar.pug
         h2 Edit User
-        form(method="post" class="pure-form pure-form-aligned")
-            div(class="pure-control-group")
-                label#user-name Username
-                input(type="text" name="user-name" value=user.username)
-            div(class="pure-control-group")
-                label#first-name First Name
-                input(type="text" name="first-name" value=user.firstName)
-            div(class="pure-control-group")
-                label#last-name Last Name
-                input(type="text" name="last-name" value=user.lastName)
-            div(class="pure-control-group")
-                label#email-address Email Address
-                input(type="email" name="email-address" value=user.email)
-            div(class="pure-control-group")
-                label#age Age
-                input(type="number" name="age" value=user.age)
-            div(class="pure-controls")
-                input(type="submit" class="pure-button pure-button-primary")
+        div(id="edit-user")
+            form(method="post" class="pure-form pure-form-aligned")
+                div(class="pure-control-group")
+                    label#user-name Username
+                    input(type="text" name="user-name" value=user.username)
+                div(class="pure-control-group")
+                    label#first-name First Name
+                    input(type="text" name="first-name" value=user.firstName)
+                div(class="pure-control-group")
+                    label#last-name Last Name
+                    input(type="text" name="last-name" value=user.lastName)
+                div(class="pure-control-group")
+                    label#email-address Email Address
+                    input(type="email" name="email-address" value=user.email)
+                div(class="pure-control-group")
+                    label#age Age
+                    input(type="number" name="age" value=user.age)
+                div(class="pure-controls")
+                    input(type="submit" class="pure-button pure-button-primary")
