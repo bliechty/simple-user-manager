@@ -6,6 +6,7 @@
 #error {
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: gray;
     border-radius: 3px;
     padding: 5px 20px;

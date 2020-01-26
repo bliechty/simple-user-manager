@@ -6,3 +6,7 @@ body {
     text-align: center;
     font-size: 20px;
 }
+
+.anchor {
+    text-decoration: none;
+}

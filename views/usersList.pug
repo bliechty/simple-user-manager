@@ -32,8 +32,8 @@ html
                             td= obj.age
                             td= obj.timeCreated
                             td
-                                a(href="/userList/"+obj.userId) Edit User
+                                a.anchor(href="/userList/"+obj.userId, class="pure-button") Edit User
                             td
-                                a(href="/deleteUser/"+obj.userId) Delete User
+                                a.anchor(href="/deleteUser/"+obj.userId, class="pure-button") Delete User
         else
             div#message There are no users saved
