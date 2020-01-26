@@ -73,7 +73,7 @@ app.get("/userList", (req, res) => {
     res.render("usersList", {users});
 });
 
-app.get("/deleteUser/:username/:userId", (req, res) => {
+app.get("/deleteUser/:userId", (req, res) => {
     let refactoredUsers = "";
     users = users.filter(user => {
         if (user.userId !== req.params.userId) {

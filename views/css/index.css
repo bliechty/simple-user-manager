@@ -1,0 +1,13 @@
+h3 {
+    font-size: 25px;
+}
+
+#home-page-info {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#ul-info {
+    font-size: 20px;
+}

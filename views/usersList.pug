@@ -11,7 +11,7 @@ html
         include navBar.pug
         h2 User List
         if users.length !== 0
-            table(class="pure-table pure-table-bordered" id="user-list-table")
+            table(class="pure-table pure-table-bordered", id="user-list-table")
                 thead
                     tr
                         th Username
@@ -34,6 +34,6 @@ html
                             td
                                 a(href="/userList/"+obj.userId) Edit User
                             td
-                                a(href="/deleteUser/"+obj.username+"/"+obj.userId) Delete User
+                                a(href="/deleteUser/"+obj.userId) Delete User
         else
-            div.message There are no users saved
+            div#message There are no users saved

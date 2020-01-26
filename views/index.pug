@@ -6,6 +6,32 @@ html
             include css/navBar.css
             include css/headers.css
             include css/text.css
+            include css/index.css
     body
         include navBar.pug
         h1 Simple User Manager
+        div#home-page-info
+            h3 Current Functionality
+            ul#ul-info
+                li Create User
+                    ul
+                        li User is saved to users.txt
+                        li Redirects to User List when user is created
+                        li Users are identified with a unique id
+                        li User is saved with username, first name, last name, and email address
+                        li User is saved with time when account was created
+                        li Form validation
+                li User List
+                    ul
+                        li Edit User
+                            ul
+                                li users.txt is overwritten with edited user and all other users
+                                li Redirects to User List when user is edited
+                                li Form validation
+                                li Form automatically filled with users current details
+                        li Delete User
+                            ul
+                                li users.txt is overwritten with all users except deleted user
+                li Other
+                    ul
+                        li User data is persistent

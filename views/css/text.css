@@ -1,3 +1,8 @@
 body {
     font-family: 'Roboto', sans-serif;
 }
+
+#message {
+    text-align: center;
+    font-size: 20px;
+}
