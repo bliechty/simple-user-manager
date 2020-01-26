@@ -1,0 +1,13 @@
+html
+    head
+        include pure.pug
+        include fonts.pug
+        style
+            include css/navBar.css
+            include css/text.css
+            include css/error.css
+    body
+        include navBar.pug
+        div#error-message
+            div= message
+            a(href="javascript:history.back()") Try Again

@@ -39,9 +39,9 @@ app.post("/createUser", (req, res) => {
         req.body["last-name"] === "" || req.body["email-address"] === "" ||
         req.body["age"] === ""
     ) {
-        res.send("Inputs cannot be blank");
+        res.render("error", {message: "Inputs cannot be blank"});
     } else if (req.body["age"] <= 0) {
-        res.send("Age has to be greater than 0");
+        res.render("error", {message: "Age has to be greater than 0"});
     } else {
         const d = new Date();
         const user = {
@@ -106,9 +106,9 @@ app.post("/userList/:userId", (req, res) => {
         req.body["last-name"] === "" || req.body["email-address"] === "" ||
         req.body["age"] === ""
     ) {
-        res.send("Inputs cannot be blank");
+        res.render("error", {message: "Inputs cannot be blank"});
     } else if (req.body["age"] <= 0) {
-        res.send("Age has to be greater than 0");
+        res.render("error", {message: "Age has to be greater than 0"});
     } else {
         let refactoredUsers = "";
         users = users.map(user => {
