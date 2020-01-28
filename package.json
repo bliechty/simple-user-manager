@@ -8,7 +8,7 @@
     "body-parser": "latest",
     "express": "^4.17.1",
     "pug": "^2.0.4",
-    "read-and-write": "^1.0.1",
+    "read-and-write": "^1.0.5",
     "uuid": "^3.4.0"
   }
 }
