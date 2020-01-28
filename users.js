@@ -7,17 +7,11 @@ const uuid = require("uuid");
 let users = [];
 let port = process.env.PORT || 8080;
 
-fs.readFile("./users.txt", "utf-8", (err, content) => {
-    if (err) {
-        console.log(`Error: ${err}`);
-    } else {
-        let tempUsers = content.split("\n");
-        tempUsers = tempUsers.slice(0, tempUsers.length - 1);
-        for (let user of tempUsers) {
-            users.push(JSON.parse(user));
-        }
-    }
-});
+const content = fs.readFileSync("users.txt", "utf-8").split("\n");
+const tempUsers = content.slice(0, content.length - 1);
+for (let user of tempUsers) {
+    users.push(JSON.parse(user));
+}
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
