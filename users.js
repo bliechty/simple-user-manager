@@ -4,14 +4,10 @@ const fs = require("fs");
 const app = express();
 const path = require("path");
 const uuid = require("uuid");
-let users = [];
+const ReadAndWrite = require("read-and-write").ReadAndWrite;
+const fileReader = new ReadAndWrite("./users.txt");
+let users = fileReader.readAllRecords();
 let port = process.env.PORT || 8080;
-
-const content = fs.readFileSync("users.txt", "utf-8").split("\n");
-const tempUsers = content.slice(0, content.length - 1);
-for (let user of tempUsers) {
-    users.push(JSON.parse(user));
-}
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -47,14 +43,8 @@ app.post("/createUser", (req, res) => {
             userId: uuid.v4(),
             timeCreated: d.toLocaleString()
         };
+        fileReader.appendRecords([user]);
         users.push(user);
-        fs.appendFile("./users.txt", `${JSON.stringify(user)}\n`, err => {
-            if (err) {
-                console.log(`Error: ${err}`);
-            } else {
-                console.log("User was appended to file");
-            }
-        });
         res.redirect("/userList");
     }
 });
@@ -68,19 +58,9 @@ app.get("/userList", (req, res) => {
 });
 
 app.get("/deleteUser/:userId", (req, res) => {
-    let refactoredUsers = "";
-    users = users.filter(user => {
-        if (user.userId !== req.params.userId) {
-            refactoredUsers += `${JSON.stringify(user)}\n`;
-        }
-        return user.userId !== req.params.userId
-    });
-    fs.writeFile("users.txt", refactoredUsers, err => {
-        if (err) {
-            console.log(`Error: ${err}`);
-        } else {
-            console.log("Users written to file");
-        }
+    users = fileReader.deleteRecord({
+        key: "userId",
+        value: req.params.userId
     });
     res.redirect("/userList");
 });
@@ -90,7 +70,7 @@ app.get("/userList/:userId", (req, res) => {
     if (user) {
         res.render("editUser", {user});
     } else {
-        res.send("That user does not exist");
+        res.render("error", {message: "That user does not exist"});
     }
 });
 
@@ -104,31 +84,27 @@ app.post("/userList/:userId", (req, res) => {
     } else if (req.body["age"] <= 0) {
         res.render("error", {message: "Age has to be greater than 0"});
     } else {
-        let refactoredUsers = "";
-        users = users.map(user => {
-            if (user.userId === req.params.userId) {
-                const refactoredUser = {
-                    ...user,
-                    username: req.body["user-name"],
-                    firstName: req.body["first-name"],
-                    lastName: req.body["last-name"],
-                    email: req.body["email-address"],
-                    age: req.body["age"]
-                };
-                refactoredUsers += `${JSON.stringify(refactoredUser)}\n`;
-                return refactoredUser;
-            } else {
-                refactoredUsers += `${JSON.stringify(user)}\n`;
-                return user;
+        users = fileReader.editRecord({
+            key: "userId",
+            value: req.params.userId
+        }, [
+            {
+                key: "username",
+                value: req.body["user-name"]
+            }, {
+                key: "firstName",
+                value: req.body["first-name"]
+            }, {
+                key: "lastName",
+                value: req.body["last-name"]
+            }, {
+                key: "email",
+                value: req.body["email-address"]
+            }, {
+                key: "age",
+                value: req.body["age"]
             }
-        });
-        fs.writeFile("users.txt", refactoredUsers, err => {
-            if (err) {
-                console.log(`Error: ${err}`);
-            } else {
-                console.log("Users written to file");
-            }
-        });
+        ]);
         res.redirect("/userList");
     }
 });
