@@ -7,6 +7,7 @@ html
             include css/usersList.css
             include css/text.css
             include css/headers.css
+            include css/error.css
     body
         include navBar.pug
         h2 User List
@@ -36,4 +37,7 @@ html
                             td
                                 a.anchor(href="/deleteUser/"+obj.userId, class="pure-button") Delete User
         else
-            div#message There are no users saved
+            div#error-container
+                div#error
+                    div#error-message No users saved
+                    a.anchor(href="/createUser", id="try-again", class="pure-button") Create User
