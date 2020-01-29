@@ -1,12 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const fs = require("fs");
 const app = express();
 const path = require("path");
 const uuid = require("uuid");
 const ReadAndWrite = require("read-and-write").ReadAndWrite;
 const fileReader = new ReadAndWrite("./users.txt");
-let users = fileReader.readAllRecords();
+let users = fileReader.readAllRecordsSync();
 let port = process.env.PORT || 8080;
 
 app.set("views", path.join(__dirname, "views"));
@@ -43,7 +42,9 @@ app.post("/createUser", (req, res) => {
             userId: uuid.v4(),
             timeCreated: d.toLocaleString()
         };
-        fileReader.appendRecords([user]);
+        fileReader.appendRecords([user], () => {
+            console.log("Appended users successfully");
+        });
         users.push(user);
         res.redirect("/userList");
     }
@@ -58,9 +59,12 @@ app.get("/userList", (req, res) => {
 });
 
 app.get("/deleteUser/:userId", (req, res) => {
-    users = fileReader.deleteRecord({
+    fileReader.deleteRecord({
         key: "userId",
         value: req.params.userId
+    }, refactoredUsers => {
+        console.log("User deleted successfully");
+        users = refactoredUsers;
     });
     res.redirect("/userList");
 });
@@ -84,7 +88,7 @@ app.post("/userList/:userId", (req, res) => {
     } else if (req.body["age"] <= 0) {
         res.render("error", {message: "Age has to be greater than 0"});
     } else {
-        users = fileReader.editRecord({
+        fileReader.editRecord({
             key: "userId",
             value: req.params.userId
         }, [
@@ -104,7 +108,10 @@ app.post("/userList/:userId", (req, res) => {
                 key: "age",
                 value: req.body["age"]
             }
-        ]);
+        ], refactoredUsers => {
+            console.log("User edited successfully");
+            users = refactoredUsers;
+        });
         res.redirect("/userList");
     }
 });
